@@ -142,3 +142,26 @@ O(n\*slog(s))+O(s\*nlog(n))=O(n\*s\*logs+s\*n\*logn)=O(n\*s\*(logs+logn))<br>
 最差情况：O(n^2)<br>
 最好情况：O(nlogn)<br>
 平均情况：O(nlogn)<br>
+
+### 对数据规模有一个概念
+对10^5的数据进行选择排序,结果计算机假死?<br>
+```C++
+#include<iostream>
+#include<cmath>
+#include<ctime>
+
+using namespace std;
+
+int main() {
+  for(int x = 1; x <= 9; x++){
+    int n = pow(10, x);
+    clock_t startTime = clock();
+    int sum = 0;
+    for(int i = 0; i < n; i++)
+      sum += i;
+    clock_t endTime = clock();
+    cout<<"10^"<<x<<" : "<<double(endTime - startTime)/CLOCKS_PER_SEC<<" s"<<endl;
+  }
+  return 0;
+}
+```
