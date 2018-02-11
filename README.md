@@ -229,8 +229,8 @@ void reverse(string &s){
   for(int i = 0; i < n/2; i++)
     swap(s[i],s[n-1-i]);
 }
+//1/2*n次swap操作：O(n)
 ```
-1/2\*n次swap操作：O(n)<br>
 O(n^2)<br>
 ```C++
 void selectionSort(int arr[],int n){
@@ -242,4 +242,10 @@ void selectionSort(int arr[],int n){
     swap(arr[i],arr[minIndex]);
   }
 }
+(n-1)+(n-2)+(n-3)+...+0
+=(0+n-1)*n/2
+=(1/2)n*(n-1)
+=1/2*n^2-1/2*n
+=O(n^2)
 ```
+
