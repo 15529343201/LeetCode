@@ -206,3 +206,40 @@ int sum2(int n){
   return n + sum2(n - 1);
 }
 ```
+O(1)<br>
+```C++
+void swapTwoInts(int &a, int &b){
+  int temp = a;
+  a = b;
+  b = temp;
+}
+```
+O(n)<br>
+```C++
+int sum(int n){
+  int ret = 0;
+  for(int i = 0; i <= n; i++)
+    ret += i;
+  return ret;
+}
+```
+```C++
+void reverse(string &s){
+  int n = s.size();
+  for(int i = 0; i < n/2; i++)
+    swap(s[i],s[n-1-i]);
+}
+```
+1/2\*n次swap操作：O(n)<br>
+O(n^2)<br>
+```C++
+void selectionSort(int arr[],int n){
+  for(int i = 0; i < n; i++){
+    int minIndex = i;
+    for(int j = i + 1; j < n; j++)
+      if(arr[j] < arr[minIndex])
+        minIndex = j;
+    swap(arr[i],arr[minIndex]);
+  }
+}
+```
