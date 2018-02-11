@@ -286,3 +286,13 @@ string intToString(int num){
 }
 n经过几次"除以10"操作后,等于0?
 ```
+![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/2.PNG)
+```C++
+void hello(int n){
+  for(int sz = 1; sz < n; sz += sz)
+    for(int i = 1; i < n; i++)
+      cout<<"Hello,Algorithm!"<<endl;
+//是nlog(n)级别的
+```
+
+
