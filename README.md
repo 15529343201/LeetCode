@@ -248,4 +248,12 @@ void selectionSort(int arr[],int n){
 =1/2*n^2-1/2*n
 =O(n^2)
 ```
-
+```C++
+void printInformation(int n){
+  for(int i = 1; i <= n; i++)
+    for(int j = 1; j <= 30; j++)
+      cout<<"Class "<<i<<" - "<<"No. "<<j<<endl;
+  return;
+}
+//30n次基本操作：O(n)
+```
