@@ -292,7 +292,20 @@ void hello(int n){
   for(int sz = 1; sz < n; sz += sz)
     for(int i = 1; i < n; i++)
       cout<<"Hello,Algorithm!"<<endl;
-//是nlog(n)级别的
+//是nlog(n)级别的,不是O(n^2)
 ```
+O(sqrt(n))<br>
+```C++
+bool isPrime(int n){
+  for(int x = 2; x*x <= n; x++)
+    if(n%x == )
+      return false;
+  return true;
+}
+```
+
+### 复杂度试验
+我们自以为写出了一个O(nlogn)的算法,但实际是O(n^2)的算法?<br>
+
 
 
