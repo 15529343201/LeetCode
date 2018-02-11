@@ -273,4 +273,4 @@ int binarySearch(int arr[], int n, int target){
   return -1;
 }
 ```
-
+![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/1.PNG)
