@@ -177,3 +177,32 @@ int main() {
 10^8 : 0.4 s
 10^9 : 3.88 s
 ```
+如果要想在1s之内解决问题:<br>
+O(n^2)的算法可以处理大约10^4级别的数据;<br>
+O(n)的算法可以处理大约10^8级别的数据;<br>
+O(nlogn)的算法可以处理大约10^7级别的数据;<br>
+
+### 空间复杂度
+多开一个辅助的数组：O(n)<br>
+多开一个辅助的二维数组：O(n^2)<br>
+多开常数空间：O(1)<br>
+递归调用是有空间代价的<br>
+空间复杂度O(1)<br>
+```C++
+int sum1(int n){
+  assert(n >= 0);
+  int ret = 0;
+  for(int i = 0; i <= n; i++)
+     ret += i;
+  return ret;
+}
+```
+空间复杂度O(n)<br>
+```C++
+int sum2(int n){
+  assert(n >= 0);
+  if(n == 0)
+    return 0;
+  return n + sum2(n - 1);
+}
+```
