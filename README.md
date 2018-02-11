@@ -274,3 +274,15 @@ int binarySearch(int arr[], int n, int target){
 }
 ```
 ![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/1.PNG)
+```C++
+string intToString(int num){
+  string s = "";
+  while(num){
+    s += '0' + num%10;
+    num /= 10;
+  }
+  reverse(s);
+  return s;
+}
+n经过几次"除以10"操作后,等于0?
+```
