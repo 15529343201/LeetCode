@@ -537,5 +537,59 @@ int main(){
 ```
 ![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/7.PNG)
 
+### 递归算法的复杂度分析
+不是有递归的函数就一定是O(nlogn)!<br>
+递归中进行一次递归调用的复杂度分析<br>
+```C++
+int binarySearch(int arr[],int l,int r,int target){
+  if(l>r)
+    return -1;
+  int mid=l+(r-l)/2;
+  if(arr[mid]==target)
+    return mid;
+  else if(arr[mid]>target)
+    return binarySearch(arr,l,mid-1,target);
+  else
+    return binarySearch(arr,mid+1,r,target);
+}
+//时间复杂度：O(logn)
+```
+如果递归函数中,只进行一次递归调用,递归深度为depth;<br>
+在每个递归函数中,时间复杂的为T;则总体的时间复杂度为O(T\*depth)<br>
+```C++
+int sum(int n){
+  assert(n>=0);
+  if(n==0)
+    return 0;
+  return n+sum(n-1);
+}
+递归深度：n
+时间复杂度：O(n)
+```
+```C++
+double pow(double x,int n){
+  assert(n>=0);
+  if(n==0)
+    return 1.0;
+  double t=pow(x,n/2);
+  if(n%2)
+    return x*t*t;
+  return t*t;
+}
+递归深度：logn
+时间复杂度：O(logn)
+```
+递归中进行多次递归调用<br>
+```C++
+int f(int n){
+  assert(n>=0);
+  if(n==0)
+    return 1;
+  return f(n-1)+f(n-1);
+}
+```
+计算调用次数<br>
+![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/8.PNG)
+
 
 
