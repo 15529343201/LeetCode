@@ -306,6 +306,147 @@ bool isPrime(int n){
 
 ### 复杂度试验
 我们自以为写出了一个O(nlogn)的算法,但实际是O(n^2)的算法?<br>
+实验,观察趋势<br>
+每次将数据规模提高两倍,看时间的变化<br>
+MyAlgorithmTester.h:<br>
+```C++
+#ifndef INC_04_TIME_COMPLEXITY_EXPERIMENTS_MYALGORITHMTESTER_H
+#define INC_04_TIME_COMPLEXITY_EXPERIMENTS_MYALGORITHMTESTER_H
+
+#include<iostream>
+#include<cassert>
+
+using namespace std;
+
+namespace MyAlgorithmTester{
+
+  // O(logN)
+  int binarySearch(int arr[],int n,int target){
+    int l=0,r=n-1;
+    while(l<=r){
+      int mid=l+(r-l)/2;
+      if(arr[mid]==target)
+        return mid;
+      if(arr[mid]>target)
+        r=mid-1;
+      else
+        l=mid+1;
+    }
+    return -1;
+  }
+
+  // O(N)
+  int findMax(int arr[],int n){
+    assert(n>0);
+    int res=arr[0];
+    for(int i=1;i<n;i++)
+      if(arr[i]>res)
+        res=arr[i];
+    return res;
+  }
+
+  // O(NlogN)
+  void __merge(int arr[],int l,int mid,int r,int aux[]){
+    int i=l,j=mid+1;
+    for(int k=l;k<=r;k++){
+      if(i>mid){
+        arr[k]=aux[j];
+        j++;
+      }else if(j>r){
+        arr[k]=aux[i];
+        i++;
+      }else if(aux[i]<aux[j]){
+        arr[k]=aux[i];
+        i++;
+      }else{
+        arr[k]=aux[j];
+        j++;
+      }
+    }
+  }
+  void mergeSort(int arr[],int n){
+    int *aux=new int[n];
+    for(int i=0;i<n;i++)
+      aux[i]=arr[i];
+    for(int sz=1;sz<n;sz+=sz)
+      for(int i=0;i<n;i+=sz+sz)
+        __merge(arr,i,i+sz-1,min(i+sz+sz-1,n-1),aux);
+    delete[] aux;
+    return;
+  }
+
+  // O(N^2)
+  void selectionSort(int arr[],int n){
+    for(int i=0;i<n;i++){
+      int minIndex=i;
+      for(int j=i+1;j<n;j++)
+        if(arr[j]<arr[minIndex])
+          minIndex=j;
+      swap(arr[i],arr[minIndex]);
+    }
+    return;
+  }
+}
+
+#endif
+```
+
+MyUtil.h:<br>
+```C++
+#include<iostream>
+#include<ctime>
+#include<assert.h>
+#include<cstdlib>
+
+using namespace std;
+
+namespace MyUtil{
+  int *generateRandomArray(int n,int rangeL,int rangeR){
+    assert(n>0&&rangeL<=rangeR);
+    int *arr=new int[n];
+    srand(time(NULL));
+    for(int i=0;i<n;i++)
+      arr[i]=rand()%(rangeR-rangeL+1)+rangeL;
+    return arr;
+  }
+
+  int *generateOrderedArray(int n){
+    assert(n>0);
+    int *arr=new int[n];
+    for(int i=0;i<n;i++)
+      arr[i]=i;
+    return arr;
+  }
+}
+```
+
+main.cpp:<br>
+```C++
+#include<iostream>
+#include<cmath>
+#include<ctime>
+#include "MyUtil.h"
+#include "MyAlgorithmTester.h"
+
+using namespace std;
+
+int main(){
+  // 数据规模倍乘测试findMax
+  // O(n)
+  cout<<"Test for findMax:"<<endl;
+  for(int i=10;i<=26;i++){
+    int n=pow(2,i);
+    int *arr=MyUtil::generateRandomArray(n,0,100000000);
+    clock_t startTime=clock();
+    MyAlgorithmTester::findMax(arr,n);
+    clock_t endTime=clock();
+    cout<<"data size 2^"<<i<<" = "<<n<<"\t";
+    cout<<"Time cost: "<<double(endTime-startTime)/CLOCKS_PER_SEC<<endl;
+    delete[] arr;
+  }
+  return 0;
+}
+```
 
 
 
