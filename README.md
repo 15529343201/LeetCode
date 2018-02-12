@@ -590,6 +590,6 @@ int f(int n){
 ```
 计算调用次数<br>
 ![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/8.PNG)
-
+![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/9.PNG)
 
 
