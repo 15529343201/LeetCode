@@ -704,3 +704,11 @@ int main(){
 ![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/11.PNG)
 ![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/12.PNG)
 ![image](https://github.com/15529343201/LeetCode/blob/chapter2/image/13.PNG)
+
+### 数组中的问题其实最常见
+- 排序:选择排序;插入排序;归并排序;快速排序
+- 查找:二分查找法
+- 数据结构:栈;队列;堆
+- ......
+
+
