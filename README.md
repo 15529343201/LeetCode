@@ -783,3 +783,7 @@ int main(){
   return 0;
 }
 ```
+
+### 283. Move Zeroes
+![image](https://github.com/15529343201/LeetCode/blob/chapter3/image/14.PNG)
+
