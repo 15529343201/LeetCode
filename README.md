@@ -785,7 +785,7 @@ int main(){
 ```
 
 ### 283. Move Zeroes
-![image](https://github.com/15529343201/LeetCode/blob/chapter3/image/14.PNG)
+![image](https://github.com/15529343201/LeetCode/blob/chapter3/image/14.PNG)<br>
 给定一个数组nums,写一个函数,将数组中所有的0挪到数组的末尾,而维持其他所有非0元素的相对位置。<br>
 ```C++
 class Solution {
@@ -806,3 +806,45 @@ class Solution {
     }
 };
 ```
+```C++
+class Solution {
+  public:
+    // 时间复杂度:O(n)
+    // 空间复杂度:O(1)
+    void moveZeroes(vector<int>& nums) {
+      int k = 0; // nums中,[0...k)的元素均为非0元素
+
+      // 遍历到第i个元素后,保证[0...i]中所有非0元素
+      // 都按照顺序排列在[0...k)中
+      for(int i = 0; i < nums.size(); i++)
+        if(nums[i])
+          nums[k++] = nums[i];
+
+      // 将nums剩余的位置放置为0
+      for(int i = k; i < nums.size(); i++)
+        nums[i] = 0;
+    }
+};
+```
+```C++
+class Solution {
+  public:
+    // 时间复杂度O(n)
+    // 空间复杂度O(1)
+    void moveZeroes(vector<int>& nums) {
+      int k = 0; // nums中,[0...k)的元素均为非0元素
+
+      // 遍历到第i个元素后,保证[0...i]中所有非0元素
+      // 都按照顺序排列在[0...k)中
+      // 同时,[k...i]为0
+      for(int i = 0; i < nums.size(); i++)
+        if(nums[i])
+          if(i != k)
+            swap(nums[k++], nums[i]);
+          else // i == k
+            k++;
+    }
+};
+```
+
+
