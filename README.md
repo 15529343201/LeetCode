@@ -847,4 +847,55 @@ class Solution {
 };
 ```
 
+### 75 Sort Colors
+给定一个有n个元素的数组,数组中元素的取值只有0,1,2三种可能。为这个数组排序。<br>
+计数排序:分别统计0,1,2的元素个数,在把它们放回到原数组。<br>
+```C++
+class Solution {
+  public:
+    // 时间复杂度：O(n)
+    // 空间复杂度：O(k),k为元素的取值范围,k=3 O(1)
+    void sortColors(vector<int>& nums) {
 
+      int count[3] = {0}; // 存放0,1,2三个元素的频率
+      for(int i = 0; i < nums.size(); i++){
+        assert(nums[i] >= 0 && nums[i] <= 2);
+        count[nums[i]]++;
+      }
+
+      int index = 0;
+      for(int i = 0; i < count[0]; i++)
+        nums[index++] = 0;
+      for(int i = 0; i < count[1]; i++)
+        nums[index++] = 1;
+      for(int i = 0; i < count[2]; i++)
+        nums[index++] = 2;
+
+    }
+};
+```
+三路归并:<br>
+![image](https://github.com/15529343201/LeetCode/blob/chapter3/image/15.PNG)<br>
+```C++
+class Solution {
+  public:
+    // 时间复杂度：O(n)
+    // 空间复杂度：O(1)
+    // 遍历一遍
+    void sortColors(vector<int>& nums) {
+
+      int zero = -1; // nums[0...zero] == 0
+      int two = nums.size(); // num[two...n-1] == 2
+      for(int i = 0; i < two;) {
+        if(nums[i] == 1)
+          i++;
+        else if(nums[i] == 2) {
+          swap(nums[i], nums[--two]);
+        }else{ // nums[i] == 0
+          assert(nums[i] == 0);
+          swap(nums[++zero], nums[i++]);
+        }
+      }
+    }
+};
+```
