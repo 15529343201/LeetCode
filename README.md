@@ -786,4 +786,23 @@ int main(){
 
 ### 283. Move Zeroes
 ![image](https://github.com/15529343201/LeetCode/blob/chapter3/image/14.PNG)
+给定一个数组nums,写一个函数,将数组中所有的0挪到数组的末尾,而维持其他所有非0元素的相对位置。<br>
+```C++
+class Solution {
+  public:
+    // 时间复杂度:O(n)
+    // 空间复杂度:O(n)
+    void moveZeroes(vector<int>& nums) {
+      vector<int> nonZeroElements;
+      for(int i = 0; i < nums.size(); i++)
+        if(nums[i])
+          nonZeroElements.push_back(nums[i]);
 
+      for(int i = 0; i < nonZeroElements.size(); i++)
+        nums[i] = nonZeroElements[i];
+
+      for(int i = nonZeroElements.size(); i < nums.size(); i++)
+        nums[i] = 0;
+    }
+};
+```
