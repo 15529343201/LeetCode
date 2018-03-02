@@ -899,3 +899,106 @@ class Solution {
     }
 };
 ```
+
+### 167 Two Sum II - Input array is sorted
+给定一个有序整型数组和一个整数target,在其中寻找两个元素,使其和为target。返回这两个数的索引。<br>
+- 如numbers = [2,7,11,15],target = 9
+- 返回数字2,7的索引1,2(索引从1开始计算)
+- 如果没有解怎样? 保证有解
+- 如果有多个解怎样? 返回任意解
+
+1.最直接的思考：暴力解法。双层遍历,O(n^2)<br>
+2.二分搜索<br>
+![image](https://github.com/15529343201/LeetCode/blob/chapter3/image/16.PNG)<br>
+3.对撞指针,`nums[i]+nums[j] <|>|= target`<br>
+```C++
+// 时间复杂度:O(n)
+// 空间复杂度:O(1)
+class Solution {
+public:
+  vector<int> twoSum(vector<int>& numbers, int target) {
+
+    assert(numbers.size() >= 2);
+
+    int l = 0, r = numbers.size() - 1;
+    while(l < r) {
+      if(numbers[l] + numbers[r] == target) {
+        int res[2] = {l+1, r+1};
+        return vector<int>(res,res+2);
+      }
+      else if(numbers[l] + numbers[r] < target)
+        l++;
+      else
+        r--;
+    }
+    throw invalid_argument("The input has no solution.");
+  }
+};
+```
+
+### 双索引技术 Two Pointer 滑动窗口
+### Minimum Size Subarray Sum
+给定一个整型数组和一个数字s,找到数组中最短的一个连续子数组,使得连续子数组的数字和sum>=s,返回这个最短的连续子数组的长度值。<br>
+- 如,给定数组[2,3,1,2,4,3], s = 7
+- 答案为[4,3],返回2
+- 什么叫子数组
+- 如果没有解怎么办? 返回0
+
+暴力解:遍历所有的连续子数组[i...j],计算其和sum,验证sum>=s,时间复杂度O(n^3) 优化:O(n^2)?<br>
+滑动窗口<br>
+```C++
+// 时间复杂度:O(n)
+// 空间复杂度:O(1)
+class Solution {
+public:
+  int minSubArrayLen(int s, vector<int>& nums) {
+    int l = 0, r = -1; // nums[l...r]为我们的滑动窗口
+    int sum = 0;
+    int res = nums.size() + 1;
+
+    while(l < nums.size()) {
+      if(r+1 < nums.size() && sum < s) {
+        sum += nums[++r];
+      else
+        sum -= nums[l++];
+      if(sum >= s)
+        res = min(res,r-l+1);
+    }
+
+    if(res == nums.size() + 1)
+      return 0;
+    return res;
+  }
+};
+```
+
+### 3.Longest Substring Without Repeating Characters
+在一个字符串中寻找没有重复字母的最长字串<br>
+- 字符集?只有字母?数字+字母? ASCII?
+- 大小写是否敏感?
+
+```C++
+class Solution {
+public:
+  int lengthOfLongestSubstring(string s) {
+
+    int freq[256] = {0};
+    int l = 0,r = -1; // 滑动窗口为s[l...r]
+    int res = 0;
+
+    while(l < s.size()) {
+      if(r + 1 < s.size() && freq[s[r+1]] == 0)
+        freq[s[++r]]++;
+      else
+        freq[s[l++]]--;
+
+      res = max(res,r-l+1);
+    }
+
+    return res;
+  }
+};
+```
+
+438.Find All Anagrams in a String<br>
+74.Minimum Window Substring<br>
