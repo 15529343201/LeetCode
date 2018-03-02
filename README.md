@@ -1002,3 +1002,79 @@ public:
 
 438.Find All Anagrams in a String<br>
 74.Minimum Window Substring<br>
+
+### 两类查找问题
+查找有无<br>
+- 元素'a'是否存在? set;集合
+
+查找对应关系(键值对应)<br>
+- 元素'a'出现了几次? map;字典
+
+### 349.Intersection of Two Arrays
+给定两个数组nums,求两个数组的公共元素。<br>
+- 如nums1=[1,2,2,1],nums2=[2,2]
+- 结果为[2]
+- 结果中每个元素只能出现一次
+- 出现的顺序可以是任意的
+
+```C++
+class Solution {
+public:
+  vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+
+    /*
+    set<int> record;
+    for(int i=0;i<nums1.size();i++)
+      record.insert(nums1[i]);
+    */
+    set<int> record(nums1.begin(),nums1.end());
+
+    set<int> resultSet;
+    for(int i=0;i<nums2.size();i++)
+      if(record.find(nums2[i])!=record.end())
+        resultSet.insert(nums2[i]);
+
+    /*
+    vector<int> resultVector;
+    for(set<int>::iterator iter=resultSet.begin();iter!=resultSet.end();iter++)
+      resultVector.push_back(*iter);
+
+    return resultVector;
+    */
+    return vector<int>(resultSet.begin(),resultSet.end());
+  }
+};
+```
+
+### 350.Intersection of Two Arrays
+给定两个数组nums,求两个数组的交集。<br>
+- 如nums1=[1,2,2,1],nums2=[2,2]
+- 结果为[2,2]
+- 出现的顺序可以是任意的
+
+```C++
+class Solution {
+public:
+  vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+
+    map<int,int> record;
+    for(int i=0;i<nums1.size();i++)
+      record[nums1[i]]++;
+
+    vector<int> resultVector;
+    for(int i=0;i<nums2.size();i++)
+      if(record[nums2[i]]>0) {
+        resultVector.push_back(nums2[i]);
+        record[nums2[i]]--;
+      }
+
+    return resultVector;
+  }
+};
+```
+
+### 底层实现
+&emsp;&emsp;普通数组实现&emsp;&emsp;顺序数组实现&emsp;&emsp;二分搜索树(平衡)<br>
+插入&emsp;&emsp;O(1)&emsp;&emsp;O(n)&emsp;&emsp;O(logn)<br>
+查找&emsp;&emsp;O(n)&emsp;&emsp;O(logn)&emsp;&emsp;O(logn)<br>
+删除&emsp;&emsp;O(n)&emsp;&emsp;O(n)&emsp;&emsp;O(logn)<br>
