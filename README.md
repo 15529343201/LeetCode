@@ -1074,7 +1074,169 @@ public:
 ```
 
 ### 底层实现
-&emsp;&emsp;普通数组实现&emsp;&emsp;顺序数组实现&emsp;&emsp;二分搜索树(平衡)<br>
-插入&emsp;&emsp;O(1)&emsp;&emsp;O(n)&emsp;&emsp;O(logn)<br>
-查找&emsp;&emsp;O(n)&emsp;&emsp;O(logn)&emsp;&emsp;O(logn)<br>
-删除&emsp;&emsp;O(n)&emsp;&emsp;O(n)&emsp;&emsp;O(logn)<br>
+&emsp;&emsp;普通数组实现&emsp;&emsp;顺序数组实现&emsp;&emsp;二分搜索树(平衡)&emsp;&emsp;哈希表<br>
+插入&emsp;&emsp;O(1)&emsp;&emsp;O(n)&emsp;&emsp;O(logn)&emsp;&emsp;O(1)<br>
+查找&emsp;&emsp;O(n)&emsp;&emsp;O(logn)&emsp;&emsp;O(logn)&emsp;&emsp;O(1)<br>
+删除&emsp;&emsp;O(n)&emsp;&emsp;O(n)&emsp;&emsp;O(logn)&emsp;&emsp;O(1)<br>
+
+### 数据的顺序性
+- 数据集中的最大值和最小值
+- 某个元素的前驱和后继
+- 某个元素的floor和ceil
+- 某个元素的排位rank
+- 选择某个排位的元素select
+
+map和set的底层实现为平衡二叉树<br>
+unordered_map和unordered_set的底层实现为哈希表<br>
+
+242.Valid Anagram<br>
+202.Happy Number<br>
+290.Word Pattern<br>
+205.Isomorphic Strings<br>
+451.Sort Characters By Frequency<br>
+
+### 1.Two Sum
+给出一个整型数组nums。返回这个数组中两个数字的索引值i和j,使得nums[i]+nums[j]等于一个给定的target值。两个索引不能相等。<br>
+- 如nums=[2,7,11,15],target=9
+- 返回[0,1]
+
+- 暴力解法:O(n^2)<br>
+- 排序后,使用双索引对撞:O(nlogn)+O(n)=O(nlogn)<br>
+- 查找表。将所有元素放入查找表,之后对于每一个元素a,查找target-a是否存在。
+
+```C++
+// 时间复杂度：O(n)
+// 空间复杂度：O(n)
+class Solution {
+public:
+  vector<int> twoSum(vector<int>& nums, int target) {
+
+    unordered_map<int,int> record;
+    for(int i=0;i<nums.size();i++){
+
+      int complement=target-nums[i];
+      if(record.find(complement)!=record.end()) {
+        int res[2]={i,record[complement]};
+        return vector<int>(res,res+2);
+      }
+      record[nums[i]]=i;
+    }
+    throw invalid_argument("the input has no solution");
+  }
+};
+```
+
+15.3Sum<br>
+18.4Sum<br>
+16.3Sum Closest<br>
+
+### 454.4Sum II
+给出四个整型数组A,B,C,D,寻找有多少i,j,k,l的组合,使得A[i]+B[j]+C[k]+D[l]==0.其中,A,B,C,D中均含有相同的元素个数N,且0<=N<=500.<br>
+暴力解法:O(n^4) 500^4=62500000000<br>
+将D中的元素放入查找表:O(n^3) 500^3=125000000<br>
+将C+D的每一种可能放入查找表:O(n^2)<br>
+```C++
+class Solution {
+public:
+  int fourSumCount(vector<int>& A,vector<int>& B,vector<int>& C,vector<int>& D) {
+
+   assert(A.size()==B.size() && B.size
+   unordered_map<int,int> record;
+   for(int i=0;i<C.size();i++)
+     for(int j=0;j<D.size();j++)
+       record[C[i]+D[j]]++;
+
+   int res=0;
+   for(int i=0;i<A.size();i++)
+     for(int j=0;j<B.size();j++)
+       if(record.find(0-A[i]-B[j])!=record.end())
+	 res+=record[0-A[i]-B[j]];
+  
+   return res; 
+  }
+}
+```
+49.Group Anagrams<br>
+
+### 447.Number of Boomerangs
+给出一个平面上的n个点,寻找存在多少个由这些点构成的三元组(i,j,k),使得i,j两点的距离等于i,k两点的距离。其中n最多为500,且所有的点坐标的范围在[-10000,10000]之间。<br>
+- 如[[0,0],[1,0],[2,0]],则结果为2
+- 两个结果为[[1,0],[0,0],[2,0]]和[[1,0],[2,0],[0,0]]
+- 暴力解法:O(n^3)
+- 观察到i是一个"枢纽",对于每个点i,遍历其余点到i的距离O(n^2)
+- 整型是否越界
+```C++
+class Solution {
+public:
+  int numberOfBoomerangs(vector<pair<int,int>>& points) {
+    int res = 0;
+    for(int i=0;i<points.size();i++){
+      unordered_map<int,int> record;
+      for(int j=0;j<points.size();j++)
+	if(j!=i)
+          record[dis(points[i],points[j])]++;
+
+      for(unordered_map<int,int>::iterator iter=record.begin();iter!=record.end();iter++)
+	if(iter->second>=2)
+          res+=(iter->second)*(iter->second-1);
+    }
+    return res;
+  }
+
+private:
+  int dis(const pair<int,int> &pa,const pair<int,int> &pb) {
+    return (pa.first - pb.first)*(pa.first-pb.first)+(pa.second-pb.second)*(pa.second-pb.second);
+  }
+};
+```
+149.Max Points on a Line<br>
+
+### 219.Contains Duplicate II
+给出一个整形数组nums和一个整数k,是否存在索引i和j,使得nums[i]==nums[j]且i和j之间的差不超过k<br>
+- 暴力解法:O(n^2)
+- 滑动窗口+查找表
+
+```C++
+// 时间复杂度:O(n)
+// 空间复杂度:O(k)
+class Solution {
+public:
+  bool containsNearbyDuplicate(vector<int>& nums,int k) {
+    unordered_set<int> record;
+    for(int i=0;i<nums.size();i++){
+      if(record.find(nums[i])!=record.end())
+	return true;
+      record.insert(nums[i]);
+      // 保持record中最多有k个元素
+      if(record.size()==k+1)
+	record.erase(nums[i-k]);
+    }
+    return false;
+  }
+};
+```
+217.Contains Duplicate<br>
+
+### 220.Contains Duplicate III
+给出一个整型数组nums,是否存在索引i和j,使得nums[i]和nums[j]之间的差别不超过给定的整数t,且i和j之间的差别不超过给定的整数k。<br>
+```C++
+// 时间复杂度:O(n)
+// 空间复杂度:O(k)
+class Solution {
+public:
+  bool containsNearbyAlmostDuplicate(vector<int>& nums,int k,int t) {
+    set<long long> record;
+    for(int i=0;i<nums.size();i++){
+      //if(record.find(nums[i])!=record.end())
+	//return true;
+      if(record.lower_bound((long long)nums[i]-(long long)t)!=record.end() && *record.lower_bound((long long)nums[i]-(long long)t)<=(long long)nums[i]+(long long)t)
+	return true;
+      record.insert(nums[i]);
+      // 保持record中最多有k个元素
+      if(record.size()==k+1)
+	record.erase(nums[i-k]);
+    }
+    return false;
+  }
+};
+```
